@@ -52,7 +52,6 @@ def insert_data_offer(input_data):
         db.session.commit()
 
 
-
 def init_db():
     """Заполненин базы данных"""
     with open(USER_DATA, encoding="utf-8") as f:
@@ -67,17 +66,19 @@ def init_db():
 
 def get_all(model):
     """Получааем список таблицы"""
-    list=[]
+    list = []
     result = db.session.query(model).all()
     for i in result:
         list.append(i.to_dict())
     return list
 
-def get_by_id(model,id):
+
+def get_by_id(model, id):
     """Получаем значение по id"""
     for row in get_all(model):
         if id == row["id"]:
             return row
+
 
 def add_bd(model, row):
     """Добавить данные в бд"""
@@ -85,7 +86,8 @@ def add_bd(model, row):
     db.session.add(result)
     db.session.commit()
 
-def update_bd(model, row,id):
+
+def update_bd(model, row, id):
     """Обновить данные в бд"""
     result = model.query.get(id)
     result.all = row
@@ -93,8 +95,7 @@ def update_bd(model, row,id):
     db.session.commit()
 
 
-
-def delete_bd(model,id):
+def delete_bd(model, id):
     """Удалить данные в бд"""
     result = model.query.get(id)
     db.session.delete(result)

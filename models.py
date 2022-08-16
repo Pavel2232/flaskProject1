@@ -1,9 +1,10 @@
 from flask_set import db
 
+
 class User(db.Model):
     """Таблица Пользователь"""
     __tablename__ = 'user'
-    id = db.Column(db.Integer,unique=True, primary_key=True)
+    id = db.Column(db.Integer, unique=True, primary_key=True)
     first_name = db.Column(db.String(100))
     last_name = db.Column(db.String(100))
     age = db.Column(db.Integer)
@@ -12,20 +13,21 @@ class User(db.Model):
     phone = db.Column(db.String(100))
 
     def to_dict(self):
-       return {
-           "id" : self.id,
-           "first_name" : self.first_name,
-           "last_name" : self.last_name,
-           "age": self.age,
-           "email": self.email,
-           "role": self.role,
-           "phone": self.phone
-       }
+        return {
+            "id": self.id,
+            "first_name": self.first_name,
+            "last_name": self.last_name,
+            "age": self.age,
+            "email": self.email,
+            "role": self.role,
+            "phone": self.phone
+        }
+
 
 class Order(db.Model):
     """Таблица Заказа"""
     __tablename__ = 'order'
-    id = db.Column(db.Integer, unique=True , primary_key=True)
+    id = db.Column(db.Integer, unique=True, primary_key=True)
     name = db.Column(db.String(100))
     description = db.Column(db.String(300))
     start_date = db.Column(db.Integer)
@@ -36,22 +38,23 @@ class Order(db.Model):
     executor_id = db.Column(db.Integer, db.ForeignKey(f"{User.__tablename__}.id"))
 
     def to_dict(self):
-       return {
-           "id" : self.id,
-           "name" : self.name,
-           "description" : self.description,
-           "start_date": self.start_date,
-           "end_date": self.end_date,
-           "address": self.address,
-           "price": self.price,
-           "customer_id": self.customer_id,
-           "executor_id": self.executor_id
-       }
+        return {
+            "id": self.id,
+            "name": self.name,
+            "description": self.description,
+            "start_date": self.start_date,
+            "end_date": self.end_date,
+            "address": self.address,
+            "price": self.price,
+            "customer_id": self.customer_id,
+            "executor_id": self.executor_id
+        }
+
 
 class Offer(db.Model):
     """Таблица Оффера"""
     __tablename__ = 'offer'
-    id = db.Column(db.Integer,unique=True, primary_key=True)
+    id = db.Column(db.Integer, unique=True, primary_key=True)
     order_id = db.Column(db.Integer, db.ForeignKey(f"{Order.__tablename__}.id"))
     executor_id = db.Column(db.Integer, db.ForeignKey(f"{User.__tablename__}.id"))
 

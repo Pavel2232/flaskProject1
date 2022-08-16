@@ -1,6 +1,7 @@
 from flask_set import db
 
 class User(db.Model):
+    """Таблица Пользователь"""
     __tablename__ = 'user'
     id = db.Column(db.Integer,unique=True, primary_key=True)
     first_name = db.Column(db.String(100))
@@ -22,6 +23,7 @@ class User(db.Model):
        }
 
 class Order(db.Model):
+    """Таблица Заказа"""
     __tablename__ = 'order'
     id = db.Column(db.Integer, unique=True , primary_key=True)
     name = db.Column(db.String(100))
@@ -47,6 +49,7 @@ class Order(db.Model):
        }
 
 class Offer(db.Model):
+    """Таблица Оффера"""
     __tablename__ = 'offer'
     id = db.Column(db.Integer,unique=True, primary_key=True)
     order_id = db.Column(db.Integer, db.ForeignKey(f"{Order.__tablename__}.id"))

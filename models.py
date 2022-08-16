@@ -58,6 +58,6 @@ class Offer(db.Model):
             "order_id": self.order_id,
             "executor_id": self.executor_id
         }
-#
+
 # db.drop_all()
 # db.create_all()

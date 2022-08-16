@@ -10,6 +10,7 @@ OFFERS_DATA = DATA_DIR.joinpath('offers.json')
 
 
 def insert_data_user(input_data):
+    """Загрузка пользователей списка в таблицу"""
     for row in input_data:
         db.session.add(User(
             id=row.get("id"),
@@ -24,6 +25,7 @@ def insert_data_user(input_data):
 
 
 def insert_data_order(input_data):
+    """Загрузка заказов списка в таблицу"""
     for row in input_data:
         db.session.add(Order(
             id=row.get("id"),
@@ -40,6 +42,7 @@ def insert_data_order(input_data):
 
 
 def insert_data_offer(input_data):
+    """Загрузка офферов списка в таблицу"""
     for row in input_data:
         db.session.add(Offer(
             id=row.get("id"),
@@ -51,6 +54,7 @@ def insert_data_offer(input_data):
 
 
 def init_db():
+    """Заполненин базы данных"""
     with open(USER_DATA, encoding="utf-8") as f:
         insert_data_user(json.load(f))
 
@@ -62,9 +66,36 @@ def init_db():
 
 
 def get_all(model):
+    """Получааем список таблицы"""
     list=[]
     result = db.session.query(model).all()
     for i in result:
         list.append(i.to_dict())
     return list
 
+def get_by_id(model,id):
+    """Получаем значение по id"""
+    for row in get_all(model):
+        if id == row["id"]:
+            return row
+
+def add_bd(model, row):
+    """Добавить данные в бд"""
+    result = model(row)
+    db.session.add(result)
+    db.session.commit()
+
+def update_bd(model, row,id):
+    """Обновить данные в бд"""
+    result = model.query.get(id)
+    result.all = row
+    db.session.add(result)
+    db.session.commit()
+
+
+
+def delete_bd(model,id):
+    """Удалить данные в бд"""
+    result = model.query.get(id)
+    db.session.delete(result)
+    db.session.commit()
